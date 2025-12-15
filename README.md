@@ -52,6 +52,12 @@ Via Linha de Comando (Jar Executável):
 2. Faça o deploy em um servidor Tomcat 8 ou 9.
 3. Acesse: `http://localhost:8080/estoque-web/`
 
+**Alternativa (Jetty via Maven):**
+Você pode rodar diretamente sem instalar o Tomcat, usando o plugin do Jetty configurado.
+1. Entre na pasta `estoque-web`.
+2. Execute: `mvn jetty:run`
+3. Acesse: `http://localhost:8080/estoque-web/`
+
 ## Funcionalidades
 
 - **Cadastro de Produtos (Desktop)**: Adicione novos produtos com quantidade mínima e valor.

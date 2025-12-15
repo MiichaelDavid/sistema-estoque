@@ -63,6 +63,22 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+      
+      <!-- Jetty Plugin -->
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.53.v20231009</version>
+        <configuration>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <httpConnector>
+            <port>8080</port>
+          </httpConnector>
+          <webApp>
+            <contextPath>/estoque-web</contextPath>
+          </webApp>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
