@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Dashboard - Estoque</title>
+</h:head>
+<h:body>
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Dashboard" url="index.xhtml" icon="pi pi-home"/>
+            <p:menuitem value="Buscar Produto" url="busca.xhtml" icon="pi pi-search"/>
+        </p:menubar>
+    </h:form>
+
+    <h:form id="form">
+        <p:panel header="Alertas de Estoque Baixo" style="margin-top:20px">
+            <p:dataTable var="prod" value="#{dashboardBean.produtosBaixoEstoque}" emptyMessage="Nenhum produto com estoque baixo.">
+                <p:column headerText="ID">
+                    <h:outputText value="#{prod.id}" />
+                </p:column>
+                
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{prod.descricao}" />
+                </p:column>
+                
+                <p:column headerText="Qtd. Mínima">
+                    <h:outputText value="#{prod.quantidadeMinima}" />
+                </p:column>
+                
+                <p:column headerText="Saldo Atual">
+                    <h:outputText value="#{dashboardBean.getSaldo(prod)}" style="font-weight:bold; color:red;"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+        
+        <p:poll interval="10" listener="#{dashboardBean.carregarDados}" update="form" />
+    </h:form>
+</h:body>
+</html>

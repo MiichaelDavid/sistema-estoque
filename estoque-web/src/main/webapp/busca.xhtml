@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Buscar Produto - Estoque</title>
+</h:head>
+<h:body>
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Dashboard" url="index.xhtml" icon="pi pi-home" />
+            <p:menuitem value="Buscar Produto" url="busca.xhtml" icon="pi pi-search" />
+        </p:menubar>
+    </h:form>
+
+    <h:form id="formBusca">
+        <p:panel header="Buscar Produto" style="margin-top:20px">
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="termo" value="Nome do Produto:" />
+                <p:inputText id="termo" value="#{buscaProdutoBean.termoBusca}" />
+                <p:commandButton value="Pesquisar" action="#{buscaProdutoBean.buscar}"
+                    update="tabelaResultados, panelDetalhe" icon="pi pi-search" />
+            </h:panelGrid>
+
+            <p:separator />
+
+            <p:dataTable id="tabelaResultados" var="prod" value="#{buscaProdutoBean.produtosEncontrados}"
+                selectionMode="single" selection="#{buscaProdutoBean.produtoSelecionado}" rowKey="#{prod.id}"
+                emptyMessage="Nenhum produto encontrado.">
+                <p:ajax event="rowSelect" listener="#{buscaProdutoBean.selecionarProduto(prod)}"
+                    update=":formBusca:panelDetalhe" />
+
+                <p:column headerText="ID" width="50">
+                    <h:outputText value="#{prod.id}" />
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{prod.descricao}" />
+                </p:column>
+                <p:column headerText="Valor">
+                    <h:outputText value="#{prod.valor}" />
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog header="Detalhes do Produto" widgetVar="dlgDetalhe" modal="true" showEffect="fade"
+                hideEffect="fade" resizable="false">
+                <!-- Dialog content if needed, but requirements ask for details display upon finding -->
+            </p:dialog>
+
+            <p:panel id="panelDetalhe" header="Ficha do Produto" style="margin-top:20px"
+                visible="#{buscaProdutoBean.produtoSelecionado != null}">
+                <p:panelGrid columns="2" rendered="#{buscaProdutoBean.produtoSelecionado != null}">
+                    <h:outputText value="ID:" />
+                    <h:outputText value="#{buscaProdutoBean.produtoSelecionado.id}" />
+
+                    <h:outputText value="Descrição:" />
+                    <h:outputText value="#{buscaProdutoBean.produtoSelecionado.descricao}" style="font-weight:bold" />
+
+                    <h:outputText value="Qtd. Mínima:" />
+                    <h:outputText value="#{buscaProdutoBean.produtoSelecionado.quantidadeMinima}" />
+
+                    <h:outputText value="Data Cadastro:" />
+                    <h:outputText value="#{buscaProdutoBean.produtoSelecionado.dataCadastro}" />
+
+                    <h:outputText value="Saldo Atual:" />
+                    <h:outputText value="#{buscaProdutoBean.saldoAtual}"
+                        style="font-size: 1.5em; color: blue; font-weight: bold;" />
+                </p:panelGrid>
+            </p:panel>
+        </p:panel>
+    </h:form>
+</h:body>
+
+</html>
